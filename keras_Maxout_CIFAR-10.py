@@ -155,8 +155,8 @@ if __name__ == '__main__':
     parser = ArgumentParser(description, formatter_class=ArgumentDefaultsHelpFormatter)
     parser.add_argument('--log',
                         help='CSV file to store training progress to.')
-    parser.add_argument('-v', '--verbose', nargs='?', type=int, default=1, const=2,
-                        help='0 = No progress is displayed. 1 = Progress is displayed on epochs. 2 = Progress bars will show progress within epochs.')
+    parser.add_argument('-v', '--verbose', nargs='?', type=int, default=2, const=1,
+                        help='0 = silent, 1 = verbose, 2 = one log line per epoch.')
     parser.add_argument('-b', '--batch_size', type=int, default=128, help='Number of samples in each batch.')
     parser.add_argument('-e', '--epochs', type=int, default=50, help='Number of epochs to train for.')
     parser.add_argument('-s', '--save',
@@ -172,6 +172,7 @@ if __name__ == '__main__':
 
     model, history = train_maxout_model(
         loaded_model,
+        verbose = args.verbose,
         batch_size=args.batch_size,
         epochs = args.epochs,
         initial_epoch = args.initial_epoch,
