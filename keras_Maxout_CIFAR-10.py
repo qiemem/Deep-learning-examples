@@ -53,59 +53,45 @@ def create_maxout_model(input_shape):
 
     inputs = layers.Input(shape = input_shape, name='input')
 
-    x = layers.Dropout(0.8, name='dropout_1')(inputs)
+    x = layers.Dropout(0.2, name='dropout_1')(inputs)
+
+    # First maxout layer
     x = layers.Maximum(name='maxout_1')([
-        layers.Conv2D(
-            96,
-            kernel_size = (8,8),
-            padding = 'same',
-            name='conv_1_{}'.format(i)
-        )(x)
+        layers.Conv2D(96, (8,8), padding = 'same', name='conv_1_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_1')(x)
 
-    x = layers.Dropout(0.8, name='dropout_2')(x)
+    x = layers.Dropout(0.2, name='dropout_2')(x)
+
+    # Second maxout layer
     x = layers.Maximum(name='maxout_2')([
-        layers.Conv2D(
-            192,
-            kernel_size = (8,8),
-            padding = 'same',
-            name='conv_2_{}'.format(i)
-        )(x)
+        layers.Conv2D(192, (8,8), padding = 'same', name='conv_2_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_2')(x)
 
-    x = layers.Dropout(0.8, name='dropout_3')(x)
+    x = layers.Dropout(0.2, name='dropout_3')(x)
+
+    # Third maxout layer
     x = layers.Maximum(name='maxout_3')([
-        layers.Conv2D(
-            192,
-            kernel_size = (5,5),
-            padding = 'same',
-            name='conv_3_{}'.format(i)
-        )(x)
+        layers.Conv2D(192, (5,5), padding = 'same', name='conv_3_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_3')(x)
 
     x = layers.Flatten(name='flatten')(x)
 
-    x = layers.Dropout(0.8, name='dropout_4')(x)
+    x = layers.Dropout(0.2, name='dropout_4')(x)
+
+    # Dense maxout layer
     x = layers.Maximum(name='maxout_5')([
-        layers.Dense(
-            500,
-            name='dense_1_{}'.format(i)
-        )(x)
+        layers.Dense(500, name='dense_1_{}'.format(i))(x)
         for i in range(5)
     ])
 
-    x = layers.Dropout(0.8, name='dropout_5')(x)
-    predictions = layers.Dense(
-        10,
-        activation='softmax',
-        name='dense_2'
-    )(x)
+    x = layers.Dropout(0.2, name='dropout_5')(x)
+    predictions = layers.Dense(10, activation='softmax', name='dense_2')(x)
 
     model = Model(inputs = inputs, outputs = predictions)
 
