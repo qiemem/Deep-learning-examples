@@ -55,7 +55,7 @@ def create_nin_model(input_shape):
     # First mlpconv layer
     x = layers.Conv2D(192, kernel_size=(5,5), padding = 'same', activation='relu', name='mlpconv_1_conv5x5')(inputs)
     x = layers.Conv2D(160, kernel_size=(1,1), padding = 'same', activation='relu', name='mlpconv_1_conv1x1_1')(x)
-    x = layers.Conv2D(96, kernel_size=(1,1), padding = 'same', name='mlpconv_1_conv1x1_2')(x)
+    x = layers.Conv2D(96, kernel_size=(1,1), padding = 'same', activation='relu', name='mlpconv_1_conv1x1_2')(x)
     x = layers.MaxPool2D(name='maxpool_1')(x)
     x = layers.Dropout(0.5, name='dropout_1')(x)
 

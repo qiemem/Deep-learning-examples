@@ -57,7 +57,7 @@ def create_maxout_model(input_shape):
 
     # First maxout layer
     x = layers.Maximum(name='maxout_1')([
-        layers.Conv2D(96, (8,8), padding = 'same', name='conv_1_{}'.format(i))(x)
+        layers.Conv2D(96, (8,8), activation='relu', padding='same', name='conv_1_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_1')(x)
@@ -66,7 +66,7 @@ def create_maxout_model(input_shape):
 
     # Second maxout layer
     x = layers.Maximum(name='maxout_2')([
-        layers.Conv2D(192, (8,8), padding = 'same', name='conv_2_{}'.format(i))(x)
+        layers.Conv2D(192, (8,8), activation='relu', padding='same', name='conv_2_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_2')(x)
@@ -75,7 +75,7 @@ def create_maxout_model(input_shape):
 
     # Third maxout layer
     x = layers.Maximum(name='maxout_3')([
-        layers.Conv2D(192, (5,5), padding = 'same', name='conv_3_{}'.format(i))(x)
+        layers.Conv2D(192, (5,5), activation='relu', padding='same', name='conv_3_{}'.format(i))(x)
         for i in range(2)
     ])
     x = layers.MaxPool2D(name='maxpool_3')(x)
@@ -86,7 +86,7 @@ def create_maxout_model(input_shape):
 
     # Dense maxout layer
     x = layers.Maximum(name='maxout_5')([
-        layers.Dense(500, name='dense_1_{}'.format(i))(x)
+        layers.Dense(500, activation='relu', name='dense_1_{}'.format(i))(x)
         for i in range(5)
     ])
 
